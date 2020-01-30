@@ -1,0 +1,26 @@
+{
+  "name": "angularcodingchallenge",
+  "version": "1.0.0",
+  "description": "A editable table using AngularJS, Node, and MySql",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ST3AMMACH1N3/angularCodingChallenge.git"
+  },
+  "author": "Ben Houston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ST3AMMACH1N3/angularCodingChallenge/issues"
+  },
+  "homepage": "https://github.com/ST3AMMACH1N3/angularCodingChallenge#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^5.21.3"
+  }
+}
