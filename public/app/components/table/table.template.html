@@ -1,6 +1,7 @@
 <div ng-controller="tableCtrl">
   <div ng-if="data">
     <p class="hint">Hint: Double click on a field to edit it.</p>
+    <p class="alert hidden"></p>
     <table id="data-table">
       <tr>
         <th
@@ -28,6 +29,9 @@
             ng-change="deselectField($event)"
             ng-blur="deselectField($event)"
             focus-on="propSelected"
+            is-email
+            is-phone
+            key="{{key}}"
           />
           <span
             class="cell"
