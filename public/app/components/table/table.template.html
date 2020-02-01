@@ -1,5 +1,6 @@
 <div ng-controller="tableCtrl">
   <div ng-if="data">
+    <p class="hint">Hint: Double click on a field to edit it.</p>
     <table id="data-table">
       <tr>
         <th
@@ -37,8 +38,10 @@
       </tr>
     </table>
 
-    <button ng-click="createRow()">New Entry</button>
-    <button ng-click="deleteRow()">Delete Entry</button>
-    <button ng-click="save()">Save Changes</button>
+    <div class="btn-section">
+      <button class="table-btn" ng-click="createRow()">New Entry</button>
+      <button class="table-btn" ng-click="deleteRow()">Delete Entry</button>
+      <button class="table-btn" ng-click="save()">Save Changes</button>
+    </div>
   </div>
 </div>

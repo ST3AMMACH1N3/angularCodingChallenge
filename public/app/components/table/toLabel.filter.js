@@ -3,7 +3,7 @@ table.filter("toLabel", function() {
     if (!input) return;
     let symbol = "";
     if (sortingBy === input) {
-      symbol = reverse ? "\u2bc5" : "\u2bc6";
+      symbol = reverse ? " \u2bc5" : " \u2bc6";
     }
     return (
       input[0].toUpperCase() +
