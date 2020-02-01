@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
-    <script src="./app/app.js"></script>
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
-    <div ng-controller="indexCtrl">
-      <h1>{{name1}}</h1>
-      <input type="text" ng-model="name1" />
-    </div>
+    <table-component></table-component>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="./app/app.js"></script>
+    <script src="./app/components/table/table.module.js"></script>
+    <script src="./app/components/table/table.controller.js"></script>
+    <script src="./app/components/table/toArray.filter.js"></script>
+    <script src="./app/components/table/relevant.filter.js"></script>
+    <script src="./app/components/table/toLabel.filter.js"></script>
+    <script src="./app/components/table/setFocus.directive.js"></script>
   </body>
 </html>

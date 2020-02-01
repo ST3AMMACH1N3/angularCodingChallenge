@@ -1,0 +1,32 @@
+<div ng-controller="tableCtrl">
+  <table>
+    <tr>
+      <th
+        ng-repeat="property in headings | relevant"
+        ng-click="changeOrder(property)"
+      >
+        {{ (property | toLabel:sortBy:reverse) }}
+      </th>
+    </tr>
+    <tr ng-repeat="item in data | toArray | orderBy:sortBy:reverse">
+      <td
+        ng-repeat="(key, value) in item | relevant"
+        ng-click="select(item.id, key)"
+      >
+        <input
+          type="text"
+          id="{{property+item.id}}"
+          ng-if="selected.id === item.id && selected.property === key"
+          ng-model="data[item.id][key]"
+          ng-blur="deselect(item.id, key)"
+          focus="propSelected"
+        />
+        <span ng-if="selected.id !== item.id || selected.property !== key"
+          >{{data[item.id][key]}}</span
+        >
+      </td>
+    </tr>
+  </table>
+
+  <button ng-click="">Save</button>
+</div>
