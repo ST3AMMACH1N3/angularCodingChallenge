@@ -37,11 +37,11 @@
         </td>
       </tr>
     </table>
-
-    <div class="btn-section">
-      <button class="table-btn" ng-click="createRow()">New Entry</button>
-      <button class="table-btn" ng-click="deleteRow()">Delete Entry</button>
-      <button class="table-btn" ng-click="save()">Save Changes</button>
-    </div>
+  </div>
+  <h1 ng-if="!data">Nothing Here</h1>
+  <div class="btn-section">
+    <button class="table-btn" ng-click="createRow()">New Entry</button>
+    <button class="table-btn" ng-click="deleteRow()">Delete Entry</button>
+    <button class="table-btn" ng-click="save()">Save Changes</button>
   </div>
 </div>

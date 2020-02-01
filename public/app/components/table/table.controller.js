@@ -3,10 +3,7 @@ table.controller("tableCtrl", [
   "$http",
   "$timeout",
   function($scope, $http, $timeout) {
-    $scope.headings;
-    $scope.data;
-    $scope.selected;
-    $scope.selectRow;
+    $scope.headings = ["id", "firstName", "lastName", "email", "phone"];
     $scope.sortBy = "firstName";
     $scope.reverse = false;
     $scope.isLoading = true;
@@ -46,7 +43,12 @@ table.controller("tableCtrl", [
     };
 
     $scope.createRow = function() {
+      console.log("Creating row");
+      if (!$scope.data) {
+        $scope.data = {};
+      }
       const uniqueId = "f" + Date.now();
+
       $scope.data[uniqueId] = $scope.headings.reduce((acc, key) => {
         if (key === "id") {
           acc[key] = uniqueId;
@@ -55,6 +57,7 @@ table.controller("tableCtrl", [
         }
         return acc;
       }, {});
+      console.log($scope.data);
       $scope.selectedRow = uniqueId;
     };
 
@@ -82,6 +85,11 @@ table.controller("tableCtrl", [
             getData();
           })
           .catch(err => console.log(err));
+      } else if (
+        Object.keys($scope.data).length === 1 &&
+        $scope.data[$scope.selectedRow]
+      ) {
+        $scope.data = null;
       } else {
         delete $scope.data[$scope.selectedRow];
       }
@@ -117,8 +125,10 @@ table.controller("tableCtrl", [
               acc[item.id] = item;
               return acc;
             }, {});
-            $scope.isLoading = false;
+          } else {
+            $scope.data = null;
           }
+          $scope.isLoading = false;
         })
         .catch(err => console.log(err));
     }
