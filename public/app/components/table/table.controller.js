@@ -26,13 +26,17 @@ table.controller("tableCtrl", [
           $scope.selected.property === property)
       )
         return;
+      angular.element(document.querySelector(".alert")).addClass("hidden");
+      // $scope.sortBy = null;
       $scope.selected = { id, property };
-      $scope.sortBy = null;
       $scope.$broadcast("propSelected");
     };
 
-    $scope.deselectField = function(event) {
+    $scope.deselectField = function(event, rollback) {
       $timeout(() => {
+        if (!$scope.selected) return;
+        const { id, property } = $scope.selected;
+        $scope.data[id][property] = $scope.data[id][property] || "";
         $scope.selected = null;
       }, 10);
     };
@@ -43,7 +47,7 @@ table.controller("tableCtrl", [
     };
 
     $scope.createRow = function() {
-      console.log("Creating row");
+      $scope.sortBy = null;
       if (!$scope.data) {
         $scope.data = {};
       }
@@ -57,15 +61,23 @@ table.controller("tableCtrl", [
         }
         return acc;
       }, {});
-      console.log($scope.data);
       $scope.selectedRow = uniqueId;
     };
 
     $scope.save = function() {
+      if (!$scope.data) return;
       if ($scope.selected) {
         $scope.selected = null;
       }
       const updated = Object.values($scope.data);
+      const hasEmpty = updated.find(obj => Object.values(obj).includes(""));
+      if (hasEmpty) {
+        angular
+          .element(document.querySelector(".alert"))
+          .removeClass("hidden")
+          .text("All fields are required.");
+        return;
+      }
       $scope.isLoading = true;
       $http
         .put("/api/user", updated)

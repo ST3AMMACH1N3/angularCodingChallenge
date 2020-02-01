@@ -91,7 +91,7 @@ tr.selected input {
 }
 
 .hidden {
-  visibility: hidden;
+  display: none;
 }
 
 .table-btn {
@@ -114,6 +114,14 @@ tr.selected input {
   padding: 0.25em;
   margin: 0px;
   text-align: right;
+}
+
+.alert {
+  border: 1px solid #f00;
+  background: #fee;
+  color: #f00;
+  padding: 0.5em;
+  margin-bottom: 0px;
 }
 
 #data-table {
