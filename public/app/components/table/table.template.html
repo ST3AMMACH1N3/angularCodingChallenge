@@ -11,22 +11,25 @@
     <tr ng-repeat="item in data | toArray | orderBy:sortBy:reverse">
       <td
         ng-repeat="(key, value) in item | relevant"
-        ng-click="select(item.id, key)"
+        ng-dblclick="select(item.id, key)"
       >
         <input
           type="text"
           id="{{property+item.id}}"
-          ng-if="selected.id === item.id && selected.property === key"
+          ng-if="selected && selected.id === item.id && selected.property === key"
           ng-model="data[item.id][key]"
-          ng-blur="deselect(item.id, key)"
-          focus="propSelected"
+          ng-model-options="{ updateOn: 'blur' }"
+          ng-change="deselect($event)"
+          ng-blur="deselect($event)"
+          focus-on="propSelected"
         />
-        <span ng-if="selected.id !== item.id || selected.property !== key"
+        <span
+          ng-if="!selected || selected.id !== item.id || selected.property !== key"
           >{{data[item.id][key]}}</span
         >
       </td>
     </tr>
   </table>
 
-  <button ng-click="">Save</button>
+  <button ng-click="save()">Save</button>
 </div>

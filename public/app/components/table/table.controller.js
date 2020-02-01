@@ -1,7 +1,8 @@
 table.controller("tableCtrl", [
   "$scope",
   "$http",
-  function($scope, $http) {
+  "$timeout",
+  function($scope, $http, $timeout) {
     $scope.headings;
     $scope.data;
     $scope.selected;
@@ -41,18 +42,19 @@ table.controller("tableCtrl", [
       $scope.$broadcast("propSelected");
     };
 
-    $scope.deselect = function(id, property) {
-      if (
-        $scope.selected &&
-        $scope.selected.id === id &&
-        $scope.selected.property === property
-      ) {
+    $scope.deselect = function(event) {
+      $timeout(() => {
         $scope.selected = null;
-      }
+      }, 10);
     };
 
     $scope.save = function() {
       const updated = Object.values($scope.data);
+      // console.log(updated);
+      $http
+        .put("/api/user", updated)
+        .then(response => console.log(response))
+        .catch(err => console.log(err));
     };
   }
 ]);

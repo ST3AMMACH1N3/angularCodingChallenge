@@ -1,4 +1,4 @@
-table.directive("focus", function() {
+table.directive("focusOn", function() {
   return function(scope, elem, attr) {
     elem[0].focus();
   };

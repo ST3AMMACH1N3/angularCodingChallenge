@@ -5,7 +5,10 @@ exports.createUser = (req, res) => {
     .then(dbUser => {
       res.json(dbUser);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.json({ msg: "Something went wrong" });
+      console.log(err);
+    });
 };
 
 exports.getUsers = (req, res) => {
@@ -13,23 +16,45 @@ exports.getUsers = (req, res) => {
     .then(dbUsers => {
       res.json(dbUsers);
     })
-    .catch(err => console.log(dbUsers));
+    .catch(err => {
+      res.json({ msg: "Something went wrong" });
+      console.log(err);
+    });
 };
 
 exports.editUser = (req, res) => {
   const { id } = req.params;
   db.User.update(req.body, { where: { id } })
     .then(([numAffected, affected]) => {
-      console.log(affected);
+      res.json(affected);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.json({ msg: "Something went wrong" });
+      console.log(err);
+    });
+};
+
+exports.bulkEditUsers = (req, res) => {
+  db.User.bulkCreate(req.body, {
+    updateOnDuplicate: ["firstName", "lastName", "email", "phone"]
+  })
+    .then(dbUsers => {
+      res.json(dbUsers);
+    })
+    .catch(err => {
+      res.json({ msg: "Something went wrong" });
+      console.log(err);
+    });
 };
 
 exports.deleteUser = (req, res) => {
   const { id } = req.params;
   db.User.destroy({ id })
     .then(numAffected => {
-      console.log(numAffected);
+      res.end();
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      res.json({ msg: "Something went wrong" });
+      console.log(err);
+    });
 };
