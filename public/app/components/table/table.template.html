@@ -1,35 +1,44 @@
 <div ng-controller="tableCtrl">
-  <table>
-    <tr>
-      <th
-        ng-repeat="property in headings | relevant"
-        ng-click="changeOrder(property)"
-      >
-        {{ (property | toLabel:sortBy:reverse) }}
-      </th>
-    </tr>
-    <tr ng-repeat="item in data | toArray | orderBy:sortBy:reverse">
-      <td
-        ng-repeat="(key, value) in item | relevant"
-        ng-dblclick="select(item.id, key)"
-      >
-        <input
-          type="text"
-          id="{{property+item.id}}"
-          ng-if="selected && selected.id === item.id && selected.property === key"
-          ng-model="data[item.id][key]"
-          ng-model-options="{ updateOn: 'blur' }"
-          ng-change="deselect($event)"
-          ng-blur="deselect($event)"
-          focus-on="propSelected"
-        />
-        <span
-          ng-if="!selected || selected.id !== item.id || selected.property !== key"
-          >{{data[item.id][key]}}</span
+  <div ng-if="data">
+    <table id="data-table">
+      <tr>
+        <th
+          ng-repeat="property in headings | relevant"
+          ng-click="changeOrder(property)"
         >
-      </td>
-    </tr>
-  </table>
+          {{ (property | toLabel:sortBy:reverse) }}
+        </th>
+      </tr>
+      <tr
+        class="{{selectedRow === item.id ? 'selected' : ''}}"
+        ng-repeat="item in data | toArray | orderBy:sortBy:reverse"
+        ng-click="selectRow(item.id)"
+      >
+        <td
+          ng-repeat="(key, value) in item | relevant"
+          ng-dblclick="selectField(item.id, key)"
+        >
+          <input
+            type="text"
+            class="cell"
+            ng-if="selected && selected.id === item.id && selected.property === key"
+            ng-model="data[item.id][key]"
+            ng-model-options="{ updateOn: 'blur' }"
+            ng-change="deselectField($event)"
+            ng-blur="deselectField($event)"
+            focus-on="propSelected"
+          />
+          <span
+            class="cell"
+            ng-if="!selected || selected.id !== item.id || selected.property !== key"
+            >{{data[item.id][key]}}</span
+          >
+        </td>
+      </tr>
+    </table>
 
-  <button ng-click="save()">Save</button>
+    <button ng-click="createRow()">New Entry</button>
+    <button ng-click="deleteRow()">Delete Entry</button>
+    <button ng-click="save()">Save Changes</button>
+  </div>
 </div>

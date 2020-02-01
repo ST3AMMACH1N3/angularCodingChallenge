@@ -35,23 +35,37 @@ exports.editUser = (req, res) => {
 };
 
 exports.bulkEditUsers = (req, res) => {
-  db.User.bulkCreate(req.body, {
-    updateOnDuplicate: ["firstName", "lastName", "email", "phone"]
+  const userFields = ["firstName", "lastName", "email", "phone"];
+  const updated = req.body.map(item => {
+    const { id, ...person } = item;
+    if (id[0] === "f") {
+      return { ...person };
+    } else {
+      return { id, ...person };
+    }
+  });
+  db.User.bulkCreate(updated, {
+    updateOnDuplicate: userFields,
+    individualHooks: true
   })
     .then(dbUsers => {
       res.json(dbUsers);
     })
     .catch(err => {
-      res.json({ msg: "Something went wrong" });
+      if (err.name === "SequelizeUniqueConstraintError") {
+        console.log("Duplicate ids updated");
+        return res.json({ msg: "Duplicate ids updated" });
+      }
       console.log(err);
+      res.json({ msg: "Something went wrong" });
     });
 };
 
 exports.deleteUser = (req, res) => {
   const { id } = req.params;
-  db.User.destroy({ id })
+  db.User.destroy({ where: { id } })
     .then(numAffected => {
-      res.end();
+      res.json(numAffected);
     })
     .catch(err => {
       res.json({ msg: "Something went wrong" });
